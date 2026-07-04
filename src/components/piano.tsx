@@ -1,3 +1,5 @@
 export default function Piano() {
-  return null
+  <div>
+    piano
+  </div>
 }
