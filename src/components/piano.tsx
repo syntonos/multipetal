@@ -1,5 +1,4 @@
+// src/components/piano.tsx
 export default function Piano() {
-  <div>
-    piano
-  </div>
+  return <div className="h-24 bg-zinc-800" />;
 }
