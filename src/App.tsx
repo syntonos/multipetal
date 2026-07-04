@@ -1,122 +1,97 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import React, { useState } from 'react';
+import './App.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [activeTab, setActiveTab] = useState<'waveform' | 'oscilloscope'>('waveform');
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="app-container">
+      {/* Sidebar */}
+      <aside className="sidebar">
+        <div className="sidebar-header">Multipetal</div>
+        <nav className="sidebar-nav">
+          <div className="nav-item active">Project</div>
+          <div className="nav-item">Instruments</div>
+          <div className="nav-item">Settings</div>
+          <div className="nav-item">Help</div>
+        </nav>
+      </aside>
 
-      <div className="ticks"></div>
+      {/* Main Content */}
+      <div className="main-content">
+        {/* Toolbar */}
+        <header className="toolbar">
+          <button className="toolbar-btn">Play</button>
+          <button className="toolbar-btn">Stop</button>
+          <button className="toolbar-btn">Record</button>
+          <div className="toolbar-spacer"></div>
+          <input type="range" className="toolbar-slider" min="0" max="100" defaultValue="50" />
+          <span className="toolbar-label">Volume</span>
+        </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
+        {/* Middle Section - Waveform and Oscilloscope */}
+        <div className="middle-section">
+          <div className="display-tabs">
+            <button 
+              className={`tab-btn ${activeTab === 'waveform' ? 'active' : ''}`}
+              onClick={() => setActiveTab('waveform')}
+            >
+              Waveform
+            </button>
+            <button 
+              className={`tab-btn ${activeTab === 'oscilloscope' ? 'active' : ''}`}
+              onClick={() => setActiveTab('oscilloscope')}
+            >
+              Oscilloscope
+            </button>
+          </div>
+          <div className="display-area">
+            {activeTab === 'waveform' && (
+              <div className="waveform-display">
+                <svg width="100%" height="100%" viewBox="0 0 800 200">
+                  <polyline
+                    points="0,100 50,80 100,120 150,70 200,130 250,90 300,110 350,75 400,125 450,85 500,115 550,70 600,130 650,95 700,110 750,80 800,100"
+                    fill="none"
+                    stroke="#00ff00"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </div>
+            )}
+            {activeTab === 'oscilloscope' && (
+              <div className="oscilloscope-display">
+                <svg width="100%" height="100%" viewBox="0 0 400 400">
+                  <circle cx="200" cy="200" r="150" fill="none" stroke="#00ff00" strokeWidth="1" opacity="0.3" />
+                  <circle cx="200" cy="200" r="100" fill="none" stroke="#00ff00" strokeWidth="1" opacity="0.3" />
+                  <circle cx="200" cy="200" r="50" fill="none" stroke="#00ff00" strokeWidth="1" opacity="0.3" />
+                  <line x1="200" y1="50" x2="200" y2="350" stroke="#00ff00" strokeWidth="1" opacity="0.3" />
+                  <line x1="50" y1="200" x2="350" y2="200" stroke="#00ff00" strokeWidth="1" opacity="0.3" />
+                  <polyline
+                    points="200,200 210,190 220,200 230,170 240,210 250,180 260,200 270,160 280,220 290,190 300,200"
+                    fill="none"
+                    stroke="#00ff00"
+                    strokeWidth="2"
+                  />
+                </svg>
+              </div>
+            )}
+          </div>
         </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
-}
+        {/* Piano */}
+        <footer className="piano-section">
+          <div className="piano-keys">
+            {[...Array(25)].map((_, i) => (
+              <div
+                key={i}
+                className={`piano-key ${i % 2 === 0 ? 'white' : 'black'}`}
+              ></div>
+            ))}
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
 
-export default App
+export default App;
